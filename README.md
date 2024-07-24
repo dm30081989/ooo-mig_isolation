@@ -78,7 +78,7 @@ pip install overpy
 
 Имеют название "*_table". Используют функции с предыдущих блоков и создают pandas.DataFrame, удобный для работы с данными. Поиск в больших радиусах может занимать много времени и памяти. 
 
-### - `road_table(latitude: float=55.75222, longitude: float=37.61556, big_radius: float=2000, small_radius: float=1000)`
+### - `road_table(latitude: float = 55.75222, longitude: float = 37.61556, big_radius: float = 2000, small_radius: float = 1000)`
 
 **Cтолбцы:**
 - `element_type` - way
@@ -100,7 +100,7 @@ pip install overpy
 **Возвращает:**
 Объект типа pandas.DataFrame, содержащий полезную информацию обо всех дорогах в заданных радиусах.   
 
-### - `industrial_table(latitude: float=55.75222, longitude: float=37.61556, radius: float=5000)`
+### - `industrial_table(latitude: float = 55.75222, longitude: float = 37.61556, radius: float = 5000)`
 
 **Cтолбцы:**
 - `element_type` - linestring, polygon или multypolygon
@@ -123,7 +123,7 @@ pip install overpy
 
 ### Описанное выше справедливо для `nature_table` (поля, леса), `quarry_table` (карьеры), `tbo` (свалки) за исключением колонок `product`, `production_volume`.
 
-### - `chimney_table(latitude: float=55.75222, longitude: float=37.61556, radius: float=5000)`
+### - `chimney_table(latitude: float = 55.75222, longitude: float = 37.61556, radius: float = 5000)`
 
 **Cтолбцы:**
 - `point_type` - тип источника (нужен для дополнения БД, пока что 'chimney')
@@ -141,7 +141,7 @@ pip install overpy
 **Возвращает:**
 Объект типа pandas.DataFrame, содержащий полезную информацию обо всех промышленных трубах в заданных радиусах.   
 
-### - `city_table(latitude: float=55.75222, longitude: float=37.61556, radius: float=5000)`
+### - `city_table(latitude: float = 55.75222, longitude: float = 37.61556, radius: float = 5000)`
 
 Не являются источниками загрязнения. Городская застройка (жилые дома, торговые центры, офисы). 
 
