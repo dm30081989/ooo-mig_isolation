@@ -208,7 +208,7 @@ pip install overpy
 **Возвращает:**
 Объект типа pandas.DataFrame, содержащий полезную информацию о промышленных зонах в пилотной зоне.
 
-### - `choose_source(lat: float, lon: float, distance: float = 5000)`
+### - `choose_source(latitude: float, longitude: float, distance: float = 5000)`
 
 Позволяет одним функциональным вызовом собрать большую базу данных об источниках загрязнения. 
 
