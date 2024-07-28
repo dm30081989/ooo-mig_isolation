@@ -290,7 +290,7 @@ Cостоит из двух логических блоков: блок, в ко
 
 # improver.py
 
-**ЗАВИСИМОСТИ**: `pandas`, `distancer`, `numpy`, `math`, Point`, `LineString`, `Polygon`, `MultiPolygon`, `MultiLineString` (from `shapely.geometry`)
+**ЗАВИСИМОСТИ**: `pandas`, `distancer`, `numpy`, `math`, `Point`, `LineString`, `Polygon`, `MultiPolygon`, `MultiLineString` (from `shapely.geometry`)
 
 ### - `calculate_production_volume(data: pd.DataFrame)`
 
