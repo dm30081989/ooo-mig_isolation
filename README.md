@@ -219,3 +219,125 @@ pip install overpy
 
 **Возвращает:**
 Объект типа pandas.DataFrame, содержащий полезную информацию обо всех источниках загрязнения сразу.
+
+# distancer.py
+
+**ЗАВИСИМОСТИ**: `math`, `Point`, `LineString`, `Polygon` (from `shapely.geometry`)
+
+Модуль, содежращий в себе методы поиска расстояний.
+
+### - `nearest2point(lat1: float, lon1: float, lat2: float, lon2: float)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `nearest2line(lat: float, lon: float, line: LineString)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `nearest2road(lat: float, lon: float, road)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `nearest2polygon(lat: float, lon: float, building: Polygon)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `add_distance2polygon(lat: float, lon: float, data)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `add_distance2road(lat: float, lon: float, data)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+# scorer.py
+
+**ЗАВИСИМОСТИ**: `pandas`, `distancer`
+
+Cостоит из двух логических блоков: блок, в котором хронятся таблицы из ПУЭ, и блок с функциями, присвивающими источникам загрязнения ранг согласно соответствующим таблицам. Содержит метод для оценки загруженности дороги внутри МКАДа.
+
+### - `add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `road_score(data: pd.DataFrame, month: int)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+# improver.py
+
+**ЗАВИСИМОСТИ**: `pandas`, `distancer`, `numpy`, `math`, Point`, `LineString`, `Polygon`, `MultiPolygon`, `MultiLineString` (from `shapely.geometry`)
+
+### - `calculate_production_volume(data: pd.DataFrame)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `update_production_volume(data: pd.DataFrame, name: str, value: float)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `add_circles(data: pd.DataFrame, lat: float, lon: float, m1: float, m2: float, m3: float)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `score_of_city(latitude: float, longitude: float, radius: float, data_city: pd.DataFrame, data_road: pd.DataFrame, data_industrial: pd.DataFrame)`
+
+**Параметры:**
+
+
+**Возвращает:**
+
+### - `determine_direction(latitude: float, longitude: float, data: pd.DataFrame, dict_wind_rose: dict)`
+
+
+
+**Параметры:**
+
+
+**Возвращает:**
+
+# changer.py
+
+**ЗАВИСИМОСТИ**: `pandas`, `numpy`, Point`, `LineString`, `Polygon` (from `shapely.geometry`)
+
+### - ``
