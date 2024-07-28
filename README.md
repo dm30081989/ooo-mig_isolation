@@ -338,6 +338,6 @@ Cостоит из двух логических блоков: блок, в ко
 
 # changer.py
 
-**ЗАВИСИМОСТИ**: `pandas`, `numpy`, Point`, `LineString`, `Polygon` (from `shapely.geometry`)
+**ЗАВИСИМОСТИ**: `pandas`, `numpy`, `Point`, `LineString`, `Polygon` (from `shapely.geometry`)
 
 ### - ``
