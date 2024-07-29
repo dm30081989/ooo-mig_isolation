@@ -640,16 +640,16 @@ def city_table(latitude: float = 55.75222,
 
 def choose_roads(data: pd.DataFrame):
     """Enter all the data and get a data from the pilot zone"""
-    data1 = data[data.ref == '�-4']
-    data2 = data[data.ref == '�-2']
-    data3 = data[data.ref == '�-5']
-    data4 = data[data.ref == '�-107']
-    data5 = data[data.ref == '�-113']
-    data6 = data[data.name == '������������� �����']
-    data7 = data[data['name'].str.contains('����', na=False)]
-    data8 = data[data.name == '��������� �����']
-    data9 = data[data.name == '��������� �����']
-    data10 = data[data.name == '��������������� �����']
+    data1 = data[data.ref == 'М-4']
+    data2 = data[data.ref == 'М-2']
+    data3 = data[data.ref == 'М-5']
+    data4 = data[data.ref == 'А-107']
+    data5 = data[data.ref == 'А-113']
+    data6 = data[data.name == 'Новорязанское шоссе']
+    data7 = data[data['name'].str.contains('МКАД', na=False)]
+    data8 = data[data.name == 'Каширское шоссе']
+    data9 = data[data.name == 'Рязанское шоссе']
+    data10 = data[data.name == 'Симферопольское шоссе']
 
     new_data = pd.concat([
         data1, data2, data3, data4, data5, data6, data7, data8, data9, data10,
@@ -661,10 +661,10 @@ def choose_roads(data: pd.DataFrame):
 
 def choose_industrial(data: pd.DataFrame):
     """Enter all the data and get a data from the pilot zone"""
-    data1 = data[data['name'].str.contains('������', na=False)]
-    data2 = data[data['name'].str.contains('�����', na=False)]
-    data3 = data[data['name'].str.contains('���', na=False)]
-    data4 = data[data['name'].str.contains('�������', na=False)]
+    data1 = data[data['name'].str.contains('Ступин', na=False)]
+    data2 = data[data['name'].str.contains('Кашир', na=False)]
+    data3 = data[data['name'].str.contains('ТЭЦ', na=False)]
+    data4 = data[data['name'].str.contains('Домодед', na=False)]
 
     new_data = pd.concat([
         data1, data2, data3, data4,
