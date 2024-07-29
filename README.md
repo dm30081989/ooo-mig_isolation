@@ -352,7 +352,22 @@ Cостоит из двух логических блоков: блок, в ко
 - *name* - название источника загрязнения
 - *value* - обновленный объем производства
 
-### - `add_circles(data: pd.DataFrame, lat: float, lon: float, m1: float, m2: float, m3: float)`
+### - `road_accounting(data: pd.DataFrame, lat: float, lon: float, m1: float, m2: float, m3: float)`
+
+Функция выбирает участки дорог, входящие в окружности/кольца радиусов `m1`, `m2`, `m3` и для каждого участка считает площадь, содержащуюся в окружности этого радиуса. Таким образом, в таблице появится две новые колонки и множество новых строк: 1) число, в какую окружность входит участок дороги - `circle`; 2) площадь входящего участка - `area`. Окружности нумеруются в порядке отдаления от заданной точки. Не меняет текущую таблицу.
+
+**Параметры:**
+- *data* - объект типа pandas.DataFrame. Таблица с информацией о дорогах.
+- *lat* -  координата географической широты опоры
+- *lon* -  координата географической долготы опоры
+- *m1* - радиус наименьшей окружности в метрах
+- *m2* - радиус средней окружности в метрах
+- *m3* - радиус наибольшей окружности в метрах
+
+**Возвращает:**
+- *new_data* - объект типа pandas.DataFrame с новыми столбцами `circle` и `area`
+
+### - `city_accounting(latitude: float, longitude: float, radius: float, data_city: pd.DataFrame, data_road: pd.DataFrame, data_industrial: pd.DataFrame)`
 
 
 
@@ -361,16 +376,7 @@ Cостоит из двух логических блоков: блок, в ко
 
 **Возвращает:**
 
-### - `score_of_city(latitude: float, longitude: float, radius: float, data_city: pd.DataFrame, data_road: pd.DataFrame, data_industrial: pd.DataFrame)`
-
-
-
-**Параметры:**
-
-
-**Возвращает:**
-
-### - `determine_direction(latitude: float, longitude: float, data: pd.DataFrame, dict_wind_rose: dict)`
+### - `wind_accounting(latitude: float, longitude: float, data: pd.DataFrame, dict_wind_rose: dict)`
 
 
 
