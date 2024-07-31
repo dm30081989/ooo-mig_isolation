@@ -234,7 +234,7 @@ def pue_tbo(distance: float):
 # add
 
 
-def add_pue_roads(lat: float, lon: float, roads: pd.DataFrame):
+def add_pue_road(lat: float, lon: float, roads: pd.DataFrame):
     """Add values to the 'pue' column"""
     for index in roads.index:
         distance = dst.nearest2road(lat, lon, roads.iloc[index]['geometry'])[0]
