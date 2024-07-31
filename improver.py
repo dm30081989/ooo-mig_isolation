@@ -294,7 +294,11 @@ def city_accounting(latitude: float, longitude: float, radius: float,
                 temp_dist = distance2intersection(latitude, longitude, insct)
                 dict_road.loc[len(dict_road)] = [index, temp_dist, 'road']
 
-        dict = pd.concat([dict_road, dict_city, dict_industrial])
+        dict = pd.concat([dict_road if not dict_road.empty else None,
+                          dict_city if not dict_city.empty else None,
+                          dict_industrial if not dict_industrial.empty else None,
+                          ])
+        
         dict.sort_values(by=['temp_dist'], ascending=True,
                          inplace=True, ignore_index=True)
 

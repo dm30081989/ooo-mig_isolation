@@ -488,16 +488,22 @@ def nature_table(latitude: float = 55.75222,
     if 'geometry' not in data.columns:
         data['geometry'] = np.nan
     if 'name' not in data.columns:
-        data['name'] = np.nan
+        data['name'] = ''
     data['pue'] = np.nan
     data['type'] = ''
     for index in data.index:
         if data.iloc[index]['natural'] == "wood":
             data.loc[index, 'type'] = 'wood'
+            if pd.isnull(data.iloc[index]['name']):
+                data.loc[index, 'name'] = 'Лес'
         elif data.iloc[index]['landuse'] == "forest":
             data.loc[index, 'type'] = 'forest'
+            if pd.isnull(data.iloc[index]['name']):
+                data.loc[index, 'name'] = 'Лес'
         else:
             data.loc[index, 'type'] = 'farmland'
+            if pd.isnull(data.iloc[index]['name']):
+                data.loc[index, 'name'] = 'Поле'
 
     data = data[[
         'element_type', 'type', 'geometry', 'name', 'pue',
