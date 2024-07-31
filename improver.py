@@ -129,11 +129,8 @@ def lenght(lnstr):
     """Returns the length of the line
     lnstr - LineString or MultiLineString"""
     ans = 0
-
     if lnstr.geom_type == 'LineString':
-        print(lnstr.coords.xy[1][1], lnstr.coords.xy[0][1])
         x1, y1 = lnstr.coords.xy[1][0], lnstr.coords.xy[0][0]
-        print(x1, y1)
         for x, y in zip(lnstr.coords.xy[1], lnstr.coords.xy[0]):
             ans += dst.nearest2point(x, y, x1, y1)
             x1, y1 = x, y
@@ -319,7 +316,7 @@ def city_accounting(latitude: float, longitude: float, radius: float,
                 if level is not np.nan:
                     levels += f'{level}_'
 
-    return data_road, data_industrial
+    return data_city, data_road, data_industrial
 
 
 def create_nsew(latitude: float, longitude: float, radius: float = 10000):
