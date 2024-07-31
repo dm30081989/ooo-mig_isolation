@@ -420,7 +420,7 @@ def industrial_table(latitude: float = 55.75222,
         data['name'] = np.nan
     if 'product' not in data.columns:
         data['product'] = np.nan
-    data['type'] = data['landuse']
+    data['type'] = 'industrial'
     data['production_volume'] = 0
     data['pue'] = np.nan
 
