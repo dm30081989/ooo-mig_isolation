@@ -605,11 +605,15 @@ def city_table(latitude: float = 55.75222,
     data4 = extract_relations_data_from_OSM(result)
     data4['element_type'] = "relation"
 
+    data1['type'] = data1.shop if 'shop' in data1.columns else ''
+    data2['type'] = data2.shop if 'shop' in data2.columns else ''
+    data3['type'] = data3.building if 'building' in data3.columns else ''
+    data4['type'] = data4.building if 'building' in data4.columns else ''
+
     data = pd.concat([
         data1, data2, data3, data4,
     ])
 
-    data['type'] = data['building']
     if 'geometry' not in data.columns:
         data['geometry'] = np.nan
     if 'name' not in data.columns:
