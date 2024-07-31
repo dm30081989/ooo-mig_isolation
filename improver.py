@@ -129,12 +129,12 @@ def lenght(lnstr):
     """Returns the length of the line
     lnstr - LineString or MultiLineString"""
     ans = 0
-    if lnstr.geom_type == 'LineString':
+    if not lnstr.is_empty and lnstr.geom_type == 'LineString':
         x1, y1 = lnstr.coords.xy[1][0], lnstr.coords.xy[0][0]
         for x, y in zip(lnstr.coords.xy[1], lnstr.coords.xy[0]):
             ans += dst.nearest2point(x, y, x1, y1)
             x1, y1 = x, y
-    else:
+    elif not lnstr.is_empty:
         for line in lnstr.geoms:
             x1, y1 = line.coords.xy[1][0], line.coords.xy[0][0]
             for x, y in zip(line.coords.xy[1], line.coords.xy[0]):

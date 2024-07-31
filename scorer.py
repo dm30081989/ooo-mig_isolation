@@ -286,7 +286,6 @@ def road_score(data: pd.DataFrame, month: int):
 
     for index in data.index:
         distance = dst.nearest2road(lat, lon, data.iloc[index]['geometry'])[0]
-        print(distance)
         if distance < 2500:
             data.loc[index, 'rank'] = score_small[month-1]
         elif distance < 5500:
