@@ -384,7 +384,7 @@ def road_table(latitude: float = 55.75222,
         data['lanes'] = np.nan
     data['element_type'] = "way"
     data['pue'] = 0
-    data['rank'] = 0
+    data['rank'] = 0.0
 
     data = data[[
         'element_type', 'highway', 'geometry', 'name', 'maxspeed',
