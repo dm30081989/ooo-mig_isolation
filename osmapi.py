@@ -25,6 +25,8 @@ def create_polygon(list_of_lines: list):
     list_of_points = []
     for line in list_of_lines:
         list_of_points += line
+    if len(list_of_points) < 4:   # abnormal values
+        return None
     return Polygon(list_of_points)
 
 
