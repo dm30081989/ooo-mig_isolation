@@ -73,7 +73,7 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
         'distance', 'production_volume', 'product',
     ]]
 
-    sorted_buildings["height_chimney"] = np.nan
+    sorted_buildings["height_chimney"] = 0.0
     sorted_buildings["power"] = -1.0
 
     count_b, len_b = 0, len(sorted_buildings)
@@ -92,7 +92,7 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
                 sorted_buildings.loc[size] = building_b
                 sorted_buildings.loc[size, "lat"] = chimney_c.lat
                 sorted_buildings.loc[size, "lon"] = chimney_c.lon
-                sorted_buildings.loc[size, "height_chimney"] = chimney_c.height
+                sorted_buildings.loc[size, "height_chimney"] = float(chimney_c.height)
                 sorted_buildings.loc[size, "distance"] = chimney_c.distance
                 sorted_buildings.loc[size, "type"] = chimney_c.point_type
                 sorted_buildings.loc[size, "power"] = chimney_c.power

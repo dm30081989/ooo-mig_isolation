@@ -453,7 +453,7 @@ def chimney_table(latitude: float = 55.75222,
     if 'geometry' not in data.columns:
         data['geometry'] = np.nan
     if 'height' not in data.columns:
-        data['height'] = np.nan
+        data['height'] = 0
     data['point_type'] = 'chimney'
     data['power'] = -1
 

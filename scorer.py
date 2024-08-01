@@ -245,7 +245,7 @@ def add_pue_road(lat: float, lon: float, roads: pd.DataFrame):
 def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
     """Add values to the 'pue' column"""
     dict_pue = {'chemistry':  pue_chemistry, 'cellulose': pue_cellulose,
-                'paper': pue_paper, 'cast_iron': pue_ferrous_metallurgy_1,
+                'paper': pue_paper, 'steel': pue_ferrous_metallurgy_1,
                 'mount': pue_ferrous_metallurgy_2, 'aluminum': pue_aluminum,
                 'coke_chemical': pue_ferrous_metallurgy_3, 'tbo': pue_tbo,
                 'color_metal': pue_color_metals, 'cement': pue_cement,
@@ -253,6 +253,7 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
                 'car': pue_сar, 'iron_mining': pue_iron_mining,
                 'coal_mining': pue_coal_mining, 'boiler_slate': pue_tes_slate,
                 'boiler_сoal': pue_tes_coal, 'rera_metal': pue_rare_metals,
+                'bricks': pue_other_materials,
                 }
 
     for index in industrials.index:
@@ -265,7 +266,7 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
         else:
             func = dict_pue[product]
             rank = func(industrials.iloc[index]['production_volume'], distance,
-                        industrials.iloc[index]['height'])
+                        industrials.iloc[index]['height_chimney'])
 
         industrials.loc[index, 'pue'] = rank
 

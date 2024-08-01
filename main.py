@@ -37,14 +37,13 @@ new_data = data.drop_duplicates(subset=['latitude', 'longitude'],
                                 ignore_index=True)
 
 print(new_data)
-
 for index in new_data.index:
     lat = new_data.iloc[index]['latitude']
     lon = new_data.iloc[index]['longitude']
     data_industrial = osmapi.choose_source(lat, lon, 5000)
     data_chimney = osmapi.chimney_table(lat, lon, 5000)
     data_road = osmapi.road_table(lat, lon, 2500, 1000)
-    data_city = osmapi.city_table(lat, lon, 5000)
+    data_city = osmapi.city_table(lat, lon, 3000)
     distancer.add_distance2polygon(lat, lon, data_industrial)
     distancer.add_distance2polygon(lat, lon, data_chimney)
     data_industrial, data_chimney = improver.clarify_location(data_industrial,
