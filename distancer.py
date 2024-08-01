@@ -1,5 +1,6 @@
 import math
-from shapely.geometry import Point, LineString, MultiLineString, Polygon, MultiPolygon
+from shapely.geometry import Point, LineString, MultiLineString, \
+                             Polygon, MultiPolygon
 
 
 def deg2rad(deg):
@@ -87,6 +88,7 @@ def nearest2road(lat: float, lon: float, road):
     """Finds the minimum distance between a point and a linestring
     and returns the coordinate of the intersection point"""
     min_dist, min_coord = 5000, 0
+
     if is_iterable(road):
         for line in road:
             dist, coord = nearest2line(lat, lon, line)

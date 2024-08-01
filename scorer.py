@@ -173,7 +173,7 @@ def pue_other_materials(volume: float, distance: float, height: float):
 
 
 # 1.9.10 mechanical engineering
-def pue_сar(volume: float, distance: float, height: float):
+def pue_car(volume: float, distance: float, height: float):
     if distance < 500:
         return 2
     return 1
@@ -239,7 +239,7 @@ def add_pue_road(lat: float, lon: float, roads: pd.DataFrame):
     for index in roads.index:
         distance = dst.nearest2road(lat, lon, roads.iloc[index]['geometry'])[0]
         roads.loc[index, 'pue'] = pue_road(distance)
-    return None
+    return roads
 
 
 def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
@@ -250,9 +250,9 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
                 'coke_chemical': pue_ferrous_metallurgy_3, 'tbo': pue_tbo,
                 'color_metal': pue_color_metals, 'cement': pue_cement,
                 'asbestos': pue_asbestos, 'concrete': pue_other_materials,
-                'car': pue_сar, 'iron_mining': pue_iron_mining,
+                'car': pue_car, 'iron_mining': pue_iron_mining,
                 'coal_mining': pue_coal_mining, 'boiler_slate': pue_tes_slate,
-                'boiler_сoal': pue_tes_coal, 'rera_metal': pue_rare_metals,
+                'boiler_coal': pue_tes_coal, 'rera_metal': pue_rare_metals,
                 'bricks': pue_other_materials,
                 }
 
@@ -261,7 +261,7 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
         distance = dst.nearest2polygon(lat, lon, geometry)
         product = industrials.iloc[index]['product']
 
-        if pd.isnull(product):
+        if pd.isnull(product) or product == '':
             rank = 0
         else:
             func = dict_pue[product]
@@ -270,7 +270,7 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
 
         industrials.loc[index, 'pue'] = rank
 
-    return None
+    return industrials
 
 
 def road_score(data: pd.DataFrame, month: int):
@@ -294,4 +294,4 @@ def road_score(data: pd.DataFrame, month: int):
         elif distance < 20000:
             data.loc[index, 'rank'] = score_big[month-1]
 
-    return None
+    return data

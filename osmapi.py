@@ -421,7 +421,7 @@ def industrial_table(latitude: float = 55.75222,
     if 'name' not in data.columns:
         data['name'] = np.nan
     if 'product' not in data.columns:
-        data['product'] = np.nan
+        data['product'] = ''
     data['type'] = 'industrial'
     data['production_volume'] = 0
     data['pue'] = np.nan
@@ -685,8 +685,8 @@ def choose_industrial(data: pd.DataFrame):
 
 
 def choose_source(latitude: float, longitude: float, distance: float = 5000):
-    """Get a database of all sources for a specific coordinate"""
-    data1 = industrial_table(latitude, longitude, distance)
+    """Get a database of all sources withoiut industrials 
+    for a specific coordinate"""
     data2 = nature_table(latitude, longitude, distance)
     data3 = quarry_table(latitude, longitude, distance)
     data4 = tbo_table(latitude, longitude, distance)
@@ -697,10 +697,6 @@ def choose_source(latitude: float, longitude: float, distance: float = 5000):
 
     data['production_volume'] = np.nan
     data['product'] = np.nan
-
-    data = pd.concat([
-        data1, data,
-    ])
 
     data.reset_index(inplace=True, drop=True)
     return data

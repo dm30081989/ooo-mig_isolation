@@ -298,7 +298,7 @@ def city_accounting(latitude: float, longitude: float, radius: float,
                           dict_city if not dict_city.empty else None,
                           dict_industrial if not dict_industrial.empty else None,
                           ])
-        
+
         dict.sort_values(by=['temp_dist'], ascending=True,
                          inplace=True, ignore_index=True)
 
@@ -362,7 +362,7 @@ def wind_accounting(latitude: float, longitude: float, data: pd.DataFrame,
                  4: 'W', 5: 'WNW', 6: 'NW', 7: 'NNW',
                  8: 'N', 9: 'NNE', 10: 'NE', 11: 'ENE',
                  12: 'E', 13: 'ESE', 14: 'SE', 15: 'SSE'}
-    data['nsew'] = np.nan
+    data['nsew'] = ''
     data['nsew_factor'] = np.nan
     # go through all the lines in the sources of pollution
     nsew = create_nsew(latitude, longitude)
@@ -384,7 +384,7 @@ def wind_accounting(latitude: float, longitude: float, data: pd.DataFrame,
 
         # the name of the side of the world
         side_value = dict_nsew[(sides[-1]-len(sides)//2 + 1) % 16]
-        data.loc[index, 'nsew'] = side_value
-        data.loc[index, 'nsew_factor'] = dict_wind_rose[side_value]
+        data.loc[index, 'nsew'] = str(side_value)
+        data.loc[index, 'nsew_factor'] = float(dict_wind_rose[side_value])
 
     return data
