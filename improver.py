@@ -68,15 +68,15 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
         'height', 'geometry', 'point_type', 'lat', 'lon', 'distance', 'power',
     ]]
 
-    sorted_buildings = buildings[[
+    sorted_build = buildings[[
         'element_type', 'geometry', 'name', 'lat', 'lon', 'type',
         'distance', 'production_volume', 'product',
     ]]
 
-    sorted_buildings["height_chimney"] = 0.0
-    sorted_buildings["power"] = -1.0
+    sorted_build["height_chimney"] = 0.0
+    sorted_build["power"] = -1.0
 
-    count_b, len_b = 0, len(sorted_buildings)
+    count_b, len_b = 0, len(sorted_build)
     while count_b < len_b:  # go through all the buildings
 
         count_c = 0
@@ -85,17 +85,17 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
         while count_c < len(sorted_chimneys) and len(sorted_chimneys) != 0:
 
             chimney_c = sorted_chimneys.iloc[count_c]
-            building_b = sorted_buildings.iloc[count_b]
-            size = len(sorted_buildings.index)
+            building_b = sorted_build.iloc[count_b]
+            size = len(sorted_build.index)
 
             if (building_b.geometry).intersects(chimney_c.geometry):
-                sorted_buildings.loc[size] = building_b
-                sorted_buildings.loc[size, "lat"] = chimney_c.lat
-                sorted_buildings.loc[size, "lon"] = chimney_c.lon
-                sorted_buildings.loc[size, "height_chimney"] = float(chimney_c.height)
-                sorted_buildings.loc[size, "distance"] = chimney_c.distance
-                sorted_buildings.loc[size, "type"] = chimney_c.point_type
-                sorted_buildings.loc[size, "power"] = chimney_c.power
+                sorted_build.loc[size] = building_b
+                sorted_build.loc[size, "lat"] = chimney_c.lat
+                sorted_build.loc[size, "lon"] = chimney_c.lon
+                sorted_build.loc[size, "height_chimney"] = float(chimney_c.height)
+                sorted_build.loc[size, "distance"] = chimney_c.distance
+                sorted_build.loc[size, "type"] = chimney_c.point_type
+                sorted_build.loc[size, "power"] = chimney_c.power
                 sorted_chimneys = sorted_chimneys.drop([count_c])
                 sorted_chimneys.reset_index(drop=True, inplace=True)
 
@@ -106,14 +106,14 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
         # delete the line with information about the building
         # if a chimney has been added
         if chimneys_before - chimneys_after > 0:
-            sorted_buildings = sorted_buildings.drop([count_b])
-            sorted_buildings.reset_index(drop=True, inplace=True)
+            sorted_build = sorted_build.drop([count_b])
+            sorted_build.reset_index(drop=True, inplace=True)
         else:
             count_b += 1
 
-    sorted_buildings = calculate_production_volume(sorted_buildings)
-    sorted_buildings['pue'] = np.nan
-    return sorted_buildings, sorted_chimneys
+    sorted_build = calculate_production_volume(sorted_build)
+    sorted_build['pue'] = np.nan
+    return sorted_build, sorted_chimneys
 
 
 def update_production_volume(data: pd.DataFrame, name: str, value: float):
@@ -257,7 +257,7 @@ def city_accounting(latitude: float, longitude: float, radius: float,
     for line in lines.geoms:
         # distance to the point of intersection with the line
         dict_road = pd.DataFrame(columns=['index', 'temp_dist', 'type'])
-        dict_industrial = pd.DataFrame(columns=['index', 'temp_dist', 'type'])
+        dict_indust = pd.DataFrame(columns=['index', 'temp_dist', 'type'])
         dict_city = pd.DataFrame(columns=['index', 'temp_dist', 'type'])
 
         for index in data_city.index:
@@ -272,14 +272,14 @@ def city_accounting(latitude: float, longitude: float, radius: float,
             insct = geometry.boundary.intersection(line)
             if insct.geom_type == 'MultiPoint':
                 temp_dist = distance2intersection(latitude, longitude, insct)
-                dict_industrial.loc[len(dict_industrial)] = [index, temp_dist,
-                                                             'industrial']
+                dict_indust.loc[len(dict_indust)] = [index, temp_dist,
+                                                     'industrial']
             elif insct.geom_type == 'Point':
                 temp_dist = dst.nearest2point(insct.coords[0][1],
                                               insct.coords[0][0],
                                               latitude, longitude)
-                dict_industrial.loc[len(dict_industrial)] = [index, temp_dist,
-                                                             'industrial']
+                dict_indust.loc[len(dict_indust)] = [index, temp_dist,
+                                                     'industrial']
 
         for index in data_road.index:
             geometry = data_road.iloc[index].geometry
@@ -296,7 +296,7 @@ def city_accounting(latitude: float, longitude: float, radius: float,
 
         dict = pd.concat([dict_road if not dict_road.empty else None,
                           dict_city if not dict_city.empty else None,
-                          dict_industrial if not dict_industrial.empty else None,
+                          dict_indust if not dict_indust.empty else None,
                           ])
 
         dict.sort_values(by=['temp_dist'], ascending=True,

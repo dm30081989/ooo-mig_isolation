@@ -685,7 +685,7 @@ def choose_industrial(data: pd.DataFrame):
 
 
 def choose_source(latitude: float, longitude: float, distance: float = 5000):
-    """Get a database of all sources withoiut industrials 
+    """Get a database of all sources withoiut industrials
     for a specific coordinate"""
     data2 = nature_table(latitude, longitude, distance)
     data3 = quarry_table(latitude, longitude, distance)
