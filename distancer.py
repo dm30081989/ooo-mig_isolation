@@ -108,21 +108,17 @@ def add_distance2polygon(lat: float, lon: float, data):
     '''Add a column to the data with the distance to the support,
     which is set in coordinates. For buildings.'''
     data['distance'] = 0
-    data = data.reset_index()
-
     for index in data.index:
         geometry = data.iloc[index]['geometry']
         data.loc[index, 'distance'] = int(nearest2polygon(lat, lon, geometry))
-    return None
+    return data
 
 
 def add_distance2road(lat: float, lon: float, data):
     '''Add a column to the data with the distance to the support,
     which is set in coordinates. For roads.'''
     data['distance'] = 0
-    data = data.reset_index()
-
     for index in data.index:
         geometry = data.iloc[index]['geometry']
         data.loc[index, 'distance'] = int(nearest2road(lat, lon, geometry)[0])
-    return None
+    return data

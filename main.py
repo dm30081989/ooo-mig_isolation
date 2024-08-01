@@ -36,25 +36,37 @@ data = pd.read_excel('list_pylons.xlsx')
 new_data = data.drop_duplicates(subset=['latitude', 'longitude'],
                                 ignore_index=True)
 
+count = 0
 print(new_data)
 for index in new_data.index:
+    count += 1
     lat = new_data.iloc[index]['latitude']
     lon = new_data.iloc[index]['longitude']
     data_industrial = osmapi.choose_source(lat, lon, 5000)
     data_chimney = osmapi.chimney_table(lat, lon, 5000)
     data_road = osmapi.road_table(lat, lon, 2500, 1000)
     data_city = osmapi.city_table(lat, lon, 3000)
-    distancer.add_distance2polygon(lat, lon, data_industrial)
-    distancer.add_distance2polygon(lat, lon, data_chimney)
+
+    data_industrial = distancer.add_distance2polygon(lat, lon, data_industrial)
+    data_chimney = distancer.add_distance2polygon(lat, lon, data_chimney)
+    data_road = distancer.add_distance2road(lat, lon, data_road)
+    print(data_road)
+
     data_industrial, data_chimney = improver.clarify_location(data_industrial,
                                                               data_chimney)
+
     improver.road_accounting(data_road, lat, lon, 200, 500, 1000)
     improver.city_accounting(lat, lon, 5000, data_city,
                              data_road, data_industrial)
+
+    #print(data_industrial)
+    # data_industrial.to_excel(f'industrial_{count}.xlsx')
+    # data_road.to_excel(f'road_{count}.xlsx')
+
     #dict_wind = improver.create_wind_roses(data_wind, n*4)
     #improver.wind_accounting(lat, lon, data_road, dict_wind)
     #improver.wind_accounting(lat, lon, data_industrial, dict_wind)
+
     scorer.road_score(data_road, 5)
     scorer.add_pue_industrial(lat, lon, data_industrial)
     scorer.add_pue_road(lat, lon, data_road)
-    print(data_industrial)
