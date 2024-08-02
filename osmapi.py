@@ -491,7 +491,8 @@ def nature_table(latitude: float = 55.75222,
         data['geometry'] = np.nan
     if 'name' not in data.columns:
         data['name'] = ''
-    data['pue'] = np.nan
+    data['pue'] = 0
+    data['product'] = ''
     data['type'] = ''
     for index in data.index:
         if data.iloc[index]['natural'] == "wood":
@@ -508,7 +509,7 @@ def nature_table(latitude: float = 55.75222,
                 data.loc[index, 'name'] = 'Поле'
 
     data = data[[
-        'element_type', 'type', 'geometry', 'name', 'pue',
+        'element_type', 'type', 'geometry', 'name', 'pue', 'product',
     ]]
     # add centroids
     lat, lon = get_lat_lon(data['geometry'])
@@ -542,10 +543,11 @@ def quarry_table(latitude: float = 55.75222,
         data['geometry'] = np.nan
     if 'name' not in data.columns:
         data['name'] = np.nan
-    data['pue'] = np.nan
+    data['pue'] = 0
+    data['product'] = ''
 
     data = data[[
-        'element_type', 'type', 'geometry', 'name', 'pue',
+        'element_type', 'type', 'geometry', 'name', 'pue', 'product',
     ]]
     # add centroids
     lat, lon = get_lat_lon(data['geometry'])
@@ -579,10 +581,11 @@ def tbo_table(latitude: float = 55.75222,
         data['geometry'] = np.nan
     if 'name' not in data.columns:
         data['name'] = np.nan
-    data['pue'] = np.nan
+    data['pue'] = 0
+    data['product'] = 'tbo'
 
     data = data[[
-        'element_type', 'type', 'geometry', 'name', 'pue',
+        'element_type', 'type', 'geometry', 'name', 'pue', 'product',
     ]]
     # add centroids
     lat, lon = get_lat_lon(data['geometry'])
@@ -687,16 +690,15 @@ def choose_industrial(data: pd.DataFrame):
 def choose_source(latitude: float, longitude: float, distance: float = 5000):
     """Get a database of all sources withoiut industrials
     for a specific coordinate"""
-    data2 = nature_table(latitude, longitude, distance)
-    data3 = quarry_table(latitude, longitude, distance)
-    data4 = tbo_table(latitude, longitude, distance)
+    data1 = nature_table(latitude, longitude, distance)
+    data2 = quarry_table(latitude, longitude, distance)
+    data3 = tbo_table(latitude, longitude, distance)
 
     data = pd.concat([
-        data2, data3, data4,
+        data1, data2, data3,
     ])
 
     data['production_volume'] = np.nan
-    data['product'] = np.nan
-
     data.reset_index(inplace=True, drop=True)
+
     return data

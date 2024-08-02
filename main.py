@@ -11,3 +11,6 @@ import creator
 
 # creator.take_industrials(data)
 creator.create_all_data("list_pylons.xlsx")
+
+# ЗАМЕЧАНИЯ ПО ПУЭ:
+# scorer - ранги присваиваются после деления. должно быть наоборот

@@ -223,7 +223,7 @@ def pue_tes_slate(volume: float, distance: float, height: float):
 
 
 # 1.9.14 landfills, warehouses
-def pue_tbo(distance: float):
+def pue_tbo(volume: float, distance: float, height: float):
     if distance < 200:
         return 3
     elif distance < 600:
@@ -237,7 +237,7 @@ def pue_tbo(distance: float):
 def add_pue_road(lat: float, lon: float, roads: pd.DataFrame):
     """Add values to the 'pue' column"""
     for index in roads.index:
-        distance = dst.nearest2road(lat, lon, roads.iloc[index]['geometry'])[0]
+        distance = roads.iloc[index]['distance']
         roads.loc[index, 'pue'] = pue_road(distance)
     return roads
 
@@ -257,8 +257,7 @@ def add_pue_industrial(lat: float, lon: float, industrials: pd.DataFrame):
                 }
 
     for index in industrials.index:
-        geometry = industrials.iloc[index]['geometry']
-        distance = dst.nearest2polygon(lat, lon, geometry)
+        distance = industrials.iloc[index]['distance']
         product = industrials.iloc[index]['product']
 
         if pd.isnull(product) or product == '':

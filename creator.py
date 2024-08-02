@@ -62,6 +62,7 @@ def create_data(data: pd.DataFrame):
         # join other sources with your entered data
         data_other = osmapi.choose_source(lat, lon, 5000)
         data_indust = pd.concat([osm_industrial, data_other])
+        data_indust.reset_index(inplace=True, drop=True)
 
         # add DataFrames about chimney, road and city
         data_chimney = osmapi.chimney_table(lat, lon, 5000)
@@ -133,6 +134,7 @@ def create_all_data(list_pylons_name: str):
         data_industrial = osmapi.industrial_table(lat, lon, 5000)
         data_other = osmapi.choose_source(lat, lon, 5000)
         data_indust = pd.concat([data_industrial, data_other])
+        data_indust.reset_index(inplace=True, drop=True)
 
         # add DataFrames about chimney, road and city
         data_chimney = osmapi.chimney_table(lat, lon, 5000)
