@@ -43,7 +43,6 @@ def create_data(data: pd.DataFrame):
     You can enter the product volumes first
     """
     result = pd.DataFrame()
-
     data_wind = pd.read_excel('wind_roses.xlsx')
     dict_wind = improver.create_wind_roses(data_wind, 6)
 
@@ -116,11 +115,16 @@ def create_data(data: pd.DataFrame):
         data_indust.to_excel(f'full_industrial_{count}.xlsx')
         data_road.to_excel(f'road_{count}.xlsx')
 
+        columns = ['area', 'pue', 'rank', 'distance']
+        data_road[columns] = data_road[columns].astype('int64')
+
         series_indust = cmp.indust2series(data_indust)
         series_road = cmp.road2series(data_road)
         series = pd.concat([series_indust, series_road])
-        result = pd.concat([result, series])
+        result = pd.concat([result, series], axis=1)
 
+    result = result.T
+    result.reset_index(inplace=True, drop=True)
     return result
 
 
