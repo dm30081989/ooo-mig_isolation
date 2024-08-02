@@ -74,6 +74,9 @@ def create_data(data: pd.DataFrame):
         data_chimney = dst.add_distance2polygon(lat, lon, data_chimney)
         data_road = dst.add_distance2road(lat, lon, data_road)
 
+        # add area
+        data_indust['area'] = osmapi.get_area(data_indust['geometry'])
+
         # add clarifying points to buildings
         data_indust, data_chimney = improver.clarify_location(data_indust,
                                                               data_chimney)
@@ -145,6 +148,9 @@ def create_all_data(list_pylons_name: str):
         data_indust = dst.add_distance2polygon(lat, lon, data_indust)
         data_chimney = dst.add_distance2polygon(lat, lon, data_chimney)
         data_road = dst.add_distance2road(lat, lon, data_road)
+
+        # add area
+        data_indust['area'] = osmapi.get_area(data_indust['geometry'])
 
         # add clarifying points to buildings
         data_indust, data_chimney = improver.clarify_location(data_indust,

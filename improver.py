@@ -70,7 +70,7 @@ def clarify_location(buildings: pd.DataFrame, chimneys: pd.DataFrame):
 
     sorted_build = buildings[[
         'element_type', 'geometry', 'name', 'lat', 'lon', 'type',
-        'distance', 'production_volume', 'product',
+        'distance', 'production_volume', 'product', 'area',
     ]]
 
     sorted_build["height_chimney"] = 0.0

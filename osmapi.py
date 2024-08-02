@@ -336,12 +336,18 @@ def get_city_way_query(latitude: float = 55.75222,
 
 
 def get_lat_lon(geometry):
-    """Enter the object and get the coordinates of the centroid"""
+    """Enter the object series and get the coordinates of the centroid"""
     lon = geometry.apply(lambda x: x.x if x.geom_type == 'Point'
                          else x.centroid.x)
     lat = geometry.apply(lambda x: x.y if x.geom_type == 'Point'
                          else x.centroid.y)
     return lat, lon
+
+
+def get_area(geometry):
+    """Enter the object series and get its area"""
+    area = geometry.apply(lambda x: int(x.area / (0.0000916**2)))
+    return area
 
 
 def road_table(latitude: float = 55.75222,
