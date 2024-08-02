@@ -1,8 +1,10 @@
 import pandas as pd
 import distancer as dst
+import complementer as cmp
 import osmapi
 import improver
 import scorer
+import re
 
 
 def take_coord(list_pylons_name: str):
@@ -40,6 +42,8 @@ def create_data(data: pd.DataFrame):
     with the name "full_industrial_*.xlsx" and "road_*.xlsx".
     You can enter the product volumes first
     """
+    result = pd.DataFrame()
+
     data_wind = pd.read_excel('wind_roses.xlsx')
     dict_wind = improver.create_wind_roses(data_wind, 6)
 
@@ -112,7 +116,23 @@ def create_data(data: pd.DataFrame):
         data_indust.to_excel(f'full_industrial_{count}.xlsx')
         data_road.to_excel(f'road_{count}.xlsx')
 
-    return data_indust, data_road
+        series_indust = cmp.indust2series(data_indust)
+        series_road = cmp.road2series(data_road)
+        series = pd.concat([series_indust, series_road])
+        result = pd.concat([result, series])
+
+    return result
+
+
+def get_mean_level(levels):
+    mean_level = []
+    for str in levels:
+        ar_numb = list(map(int, re.split(r'_|-', str)[:-1]))
+        if len(ar_numb) != 0:
+            mean_level.append(sum(ar_numb)/len(ar_numb))
+        else:
+            mean_level.append(0)
+    return mean_level
 
 
 def create_all_data(list_pylons_name: str):
@@ -121,6 +141,7 @@ def create_all_data(list_pylons_name: str):
     with the name "full_industrial_*.xlsx" and "road_*.xlsx".
     You cannot enter the product volumes first
     """
+    result = pd.DataFrame()
     data_wind = pd.read_excel('wind_roses.xlsx')
     dict_wind = improver.create_wind_roses(data_wind, 6)
 
@@ -167,6 +188,9 @@ def create_all_data(list_pylons_name: str):
                                                               data_road,
                                                               data_indust)
 
+        data_road['mean_level'] = get_mean_level(data_road['levels'])
+        data_indust['mean_level'] = get_mean_level(data_indust['levels'])
+
         # add pue score
         data_road = scorer.road_score(data_road, 5)
         data_road = scorer.add_pue_road(lat, lon, data_road)
@@ -183,8 +207,18 @@ def create_all_data(list_pylons_name: str):
         data_indust.sort_values(by=['type'], inplace=True,
                                 ignore_index=True,)
 
+        columns = ['area', 'pue', 'rank', 'distance']
+        data_road[columns] = data_road[columns].astype('int64')
+
+        series_indust = cmp.indust2series(data_indust)
+        series_road = cmp.road2series(data_road)
+        series = pd.concat([series_indust, series_road])
+        result = pd.concat([result, series], axis=1)
+
         # create excel files
         data_indust.to_excel(f'full_industrial_{count}.xlsx')
         data_road.to_excel(f'road_{count}.xlsx')
 
-    return data_indust, data_road
+    result = result.T
+    result.reset_index(inplace=True, drop=True)
+    return result

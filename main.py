@@ -9,8 +9,8 @@ import creator
 # d.save("map.html")
 
 
-# creator.take_industrials(data)
-creator.create_all_data("list_pylons.xlsx")
+d = creator.create_all_data('list_pylons.xlsx')
 
+print(d)
 # ЗАМЕЧАНИЯ ПО ПУЭ:
 # scorer - ранги присваиваются после деления. должно быть наоборот

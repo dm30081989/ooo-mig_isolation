@@ -172,8 +172,8 @@ def road_accounting(data: pd.DataFrame, lat: float, lon: float,
     # create a empty DataFrame
     new_data = pd.DataFrame(columns=data.columns)
     # and new columns
-    new_data['circle'] = pd.Series(dtype='int')
-    new_data['area'] = pd.Series(dtype='float')
+    new_data['circle'] = pd.Series(dtype='int64')
+    new_data['area'] = pd.Series(dtype='float64')
     circle1 = create_circle(lat, lon, m1)
     circle2 = create_circle(lat, lon, m2)
     circle3 = create_circle(lat, lon, m3)
@@ -187,27 +187,27 @@ def road_accounting(data: pd.DataFrame, lat: float, lon: float,
         # small radius
         if data.iloc[index]['distance'] < m1:
             area = 4 * int(data.iloc[index]['lanes']) * int(lenght(line1))
-            s2 = pd.Series({'circle': 4, 'area': area})
+            s2 = pd.Series({'circle': 4, 'area': int(area)})
             new_data.loc[len(new_data)] = pd.concat([s1, s2])
         # medium radius
         if data.iloc[index]['distance'] < m2:
             line = line2.difference(line1)
             if not line.is_empty:
                 area = 4 * int(data.iloc[index]['lanes']) * int(lenght(line))
-                s2 = pd.Series({'circle': 3, 'area': area})
+                s2 = pd.Series({'circle': 3, 'area': int(area)})
                 new_data.loc[len(new_data)] = pd.concat([s1, s2])
         # big radius
         if data.iloc[index]['distance'] < m3:
             line = line3.difference(line2)
             if not line.is_empty:
                 area = 4 * int(data.iloc[index]['lanes']) * int(lenght(line))
-                s2 = pd.Series({'circle': 2, 'area': area})
+                s2 = pd.Series({'circle': 2, 'area': int(area)})
                 new_data.loc[len(new_data)] = pd.concat([s1, s2])
         # other
         line = lnstr.difference(line3)
         if not line.is_empty:
             area = 4 * int(data.iloc[index]['lanes']) * int(lenght(line))
-            s2 = pd.Series({'circle': 1, 'area': area})
+            s2 = pd.Series({'circle': 1, 'area': int(area)})
             new_data.loc[len(new_data)] = pd.concat([s1, s2])
 
     new_data.reset_index(drop=True, inplace=True)
