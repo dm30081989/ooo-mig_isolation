@@ -155,6 +155,7 @@ def create_all_data(list_pylons_name: str):
     count = 0
     for index in data.index:
         count += 1
+        print(count)
         lat = data.iloc[index]['latitude']
         lon = data.iloc[index]['longitude']
 

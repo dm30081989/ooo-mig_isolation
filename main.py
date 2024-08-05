@@ -1,16 +1,12 @@
-# import geopandas as gpd
+# import geopandas as gpdpi
 import pandas as pd
 import creator
 
 
 # gdata = gpd.GeoDataFrame(data_industrial, crs="EPSG:4326",
-#                          geometry='geometry')
+#                         geometry='geometry')
 # d = gdata.explore()
 # d.save("map.html")
 
-
 d = creator.create_all_data('list_pylons.xlsx')
-
 print(d)
-# ЗАМЕЧАНИЯ ПО ПУЭ:
-# scorer - ранги присваиваются после деления. должно быть наоборот
