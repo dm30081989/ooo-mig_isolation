@@ -10,7 +10,7 @@ import creator
 
 
 d = creator.create_all_data('list_pylons.xlsx')
-
-print(d)
+d.to_excel('data.xlsx')
+# ааааааааааааааааа
 # ЗАМЕЧАНИЯ ПО ПУЭ:
 # scorer - ранги присваиваются после деления. должно быть наоборот
